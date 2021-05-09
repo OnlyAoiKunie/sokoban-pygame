@@ -2,8 +2,8 @@ from element.obj import Object
 from element.box import Box
 from element.goal import Goal
 from pygame import image, transform
-from element import consts
 from element import direction
+import parameter
 
 import time
 
@@ -48,7 +48,7 @@ class Player(Object):
         if self.__ammo < 0:
             return False
         now = time.time()
-        if now - self.__cooldown > consts.BULLET_COOLDOWN:
+        if now - self.__cooldown > parameter.BULLET_COOLDOWN:
             self.__cooldown = now
             self.__ammo -= 1
             return True
@@ -68,7 +68,7 @@ class Player(Object):
             if item is self or isinstance(item, Goal):
                 continue
             item_x, item_y = item.pos()
-            if abs(item_x - player_x) < consts.GAP and abs(item_y - player_y) < consts.GAP:
+            if abs(item_x - player_x) < parameter.GAP and abs(item_y - player_y) < parameter.GAP:
                 # 碰撞到的是箱子的情況
                 if isinstance(item, Box):
                     prev_pos = item.pos()

@@ -2,7 +2,8 @@ from element.obj import Object
 from element.player import Player
 from element.guard import Guard
 from element.goal import Goal
-from element import consts, direction
+from element import direction
+import parameter
 from pygame import image
 
 img = image.load("imgs/bullet.png").convert_alpha()
@@ -12,7 +13,7 @@ class Bullet(Object):
     def __init__(self, x, y, bullet_dir):
         super().__init__(x, y)
         super().set_img(img)
-        self.__velocity = consts.BULLET_VELOCITY
+        self.__velocity = parameter.BULLET_VELOCITY
         self.__direction = bullet_dir
 
         if self.__direction == direction.DOWN:
@@ -36,7 +37,7 @@ class Bullet(Object):
             if item is self or isinstance(item, Player) or isinstance(item, Goal):
                 continue
             item_x, item_y = item.pos()
-            if abs(item_x - bullet_x) < consts.GAP and abs(item_y - bullet_y) < consts.GAP:
+            if abs(item_x - bullet_x) < parameter.GAP and abs(item_y - bullet_y) < parameter.GAP:
                 world.remove(self)
                 if isinstance(item, Guard):
                     world.remove(item)

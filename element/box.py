@@ -1,19 +1,20 @@
 from element.obj import Object
 from element.goal import Goal
-from element import consts
+import parameter
 from pygame import image, rect
 import random
 
 img = image.load("imgs/boxes.webp").convert_alpha()
-imgs = [ _ for _ in range(10) ]
+imgs = [_ for _ in range(10)]
 for i, _ in enumerate(imgs):
-    offset = consts.BOX_SIZE * i
-    rect_ = rect.Rect(offset, 0, consts.BOX_SIZE, consts.BOX_SIZE)
+    offset = parameter.BOX_SIZE * i
+    rect_ = rect.Rect(offset, 0, parameter.BOX_SIZE, parameter.BOX_SIZE)
     imgs[i] = img.subsurface(rect_)
+
 
 class Box(Object):
     def __init__(self, x, y):
-        super().__init__(x + consts.BOX_OFFSET, y + consts.BOX_OFFSET)
+        super().__init__(x + parameter.BOX_OFFSET, y + parameter.BOX_OFFSET)
         self.__img = random.choice(imgs)
         super().set_img(self.__img)
 
@@ -29,7 +30,7 @@ class Box(Object):
             if item is self or isinstance(item, Goal):
                 continue
             item_x, item_y = item.pos()
-            if abs(item_x - box_x) < consts.BOX_GAP and abs(item_y - box_y) < consts.BOX_GAP:
+            if abs(item_x - box_x) < parameter.BOX_GAP and abs(item_y - box_y) < parameter.BOX_GAP:
                 return True
         return False
 

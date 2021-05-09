@@ -3,11 +3,15 @@ import time
 
 pygame.init()  # 初始化pygame
 pygame.font.init()
-width, height = 1600, 800  # 設定視窗大小
-screen = pygame.display.set_mode((width, height))
+
+import parameter
+
+# 設定視窗大小
+screen = pygame.display.set_mode((parameter.WIN_WIDTH, parameter.WIN_HEIGHT))
 
 import element
 import maps
+import frame
 
 # bg_r = pygame.transform.scale(bg_r, (img_width, img_height))
 
@@ -22,6 +26,8 @@ class Game():
         self.map_ = maps.get_map(level)
         self.build_world()
         self.key_cooldown = time.time()
+        self.game_pause = frame.pause.Pause()
+        self.STW = False
 
         self.display_font = pygame.font.SysFont("default", 32)
 
@@ -39,11 +45,16 @@ class Game():
                     in_game = False
 
             self.screen.fill(self.background)
-            self.update_world()
-            self.draw_world()
-            self.screen.blit(self.player.img(), self.player.pos())
+            
+            if self.STW:
+                self.game_pause.update(self.screen)
+            else:
+                self.update_world()
+                self.key_handle()
+                self.draw_world()
+                self.screen.blit(self.player.img(), self.player.pos())
 
-            text = " fps: {:.03f}".format(self.ticker.get_fps())
+            text = " fps: {:.1f}".format(self.ticker.get_fps())
             text = self.display_font.render(text, False, (0, 0, 0))
             self.screen.blit(text, (1440, 740))
 
@@ -54,8 +65,6 @@ class Game():
             pygame.display.update()
             self.ticker.tick(60)  # 60 fps
 
-            self.key_handle()
-
         pygame.quit()
 
     # 按鍵輸入處理
@@ -64,29 +73,28 @@ class Game():
 
         # player movement
         if keys[pygame.K_UP]:
-            self.player.move(0, -element.consts.PLAYER_VELOCITY, self.world)
+            self.player.move(0, -parameter.PLAYER_VELOCITY, self.world)
             self.player.set_dir(element.direction.UP)
         elif keys[pygame.K_DOWN]:
-            self.player.move(0, element.consts.PLAYER_VELOCITY, self.world)
+            self.player.move(0, parameter.PLAYER_VELOCITY, self.world)
             self.player.set_dir(element.direction.DOWN)
         elif keys[pygame.K_LEFT]:
-            self.player.move(-element.consts.PLAYER_VELOCITY, 0, self.world)
+            self.player.move(-parameter.PLAYER_VELOCITY, 0, self.world)
             self.player.set_dir(element.direction.LEFT)
         elif keys[pygame.K_RIGHT]:
-            self.player.move(element.consts.PLAYER_VELOCITY, 0, self.world)
+            self.player.move(parameter.PLAYER_VELOCITY, 0, self.world)
             self.player.set_dir(element.direction.RIGHT)
 
         # game restart
         if keys[pygame.K_r]:
             now = time.time()
-            if now - self.key_cooldown > element.consts.KEY_COOLDOWN:
+            if now - self.key_cooldown > parameter.KEY_COOLDOWN:
                 self.restart()
                 self.key_cooldown = now
 
         # game pause
-        # todo
         if keys[pygame.K_ESCAPE]:
-            pass
+            self.STW = True
 
         # player attack
         if keys[pygame.K_SPACE]:
@@ -139,6 +147,9 @@ class Game():
         if self.mask_enabled:
             player_x, player_y = self.player.pos()
             self.screen.blit(self.mask.img(), (player_x-self.mask.offset_x, player_y-self.mask.offset_y))
+
+    def pause(self):
+        pass
 
     def restart(self):
         self.build_world()

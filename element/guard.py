@@ -1,7 +1,7 @@
 from element.obj import Object
 from pygame import image, transform
 from element import direction
-from element import consts
+import parameter
 
 imgs = [_ for _ in range(4)]
 
@@ -20,7 +20,7 @@ class Guard(Object):
         super().__init__(x, y)
         self.__dir = direction.DOWN
         super().set_img(self.__img())
-        self.__velocity = consts.GUARD_VELOCITY
+        self.__velocity = parameter.GUARD_VELOCITY
 
     def set_dir(self, direction):
         self.__dir = direction
@@ -50,7 +50,7 @@ class Guard(Object):
             if item is self:
                 continue
             item_x, item_y = item.pos()
-            if abs(item_x - police_x) < consts.GAP and abs(item_y - police_y) < consts.GAP:
+            if abs(item_x - police_x) < parameter.GAP and abs(item_y - police_y) < parameter.GAP:
                 return True
         return False
 
