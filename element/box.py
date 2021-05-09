@@ -7,7 +7,7 @@ import random
 imgs = [_ for _ in range(10)]
 
 for i in range(10):
-    img = image.load(f"imgs/treasures/{i}.png")
+    img = image.load(f"imgs/boxes/{i}.png")
     imgs[i] = img
 
 
