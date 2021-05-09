@@ -13,8 +13,6 @@ import element
 import maps
 import frame
 
-# bg_r = pygame.transform.scale(bg_r, (img_width, img_height))
-
 
 class Game():
 
@@ -92,23 +90,16 @@ class Game():
             self.player.move(parameter.PLAYER_VELOCITY, 0, self.world)
             self.player.set_dir(element.direction.RIGHT)
 
-        # game restart
-        if keys[pygame.K_r]:
-            now = time.time()
-            if now - self.key_cooldown > parameter.KEY_COOLDOWN:
-                self.restart()
-                self.key_cooldown = now
-
-        # game pause
-        if keys[pygame.K_ESCAPE]:
-            self.STW = True
-
         # player attack
         if keys[pygame.K_SPACE]:
             if self.player.shoot():
                 player_x, player_y = self.player.pos()
                 player_dir = self.player.direction()
                 self.world.append(element.Bullet(player_x, player_y, player_dir))
+
+        # game pause
+        if keys[pygame.K_ESCAPE]:
+            self.STW = True
 
     # 建構地圖
     def build_world(self):
@@ -143,6 +134,7 @@ class Game():
             # 子彈位置更新
             if isinstance(item, element.Bullet):
                 item.update(self.world)
+            # 警衛移動
             elif isinstance(item, element.Guard):
                 item.update(self.world)
 
@@ -154,9 +146,6 @@ class Game():
         if self.mask_enabled:
             player_x, player_y = self.player.pos()
             self.screen.blit(self.mask.img(), (player_x-self.mask.offset_x, player_y-self.mask.offset_y))
-
-    def pause(self):
-        pass
 
     def restart(self):
         self.build_world()
