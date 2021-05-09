@@ -1,83 +1,128 @@
 import pygame
+import time
+
 import element
+import maps
 
 # bg_r = pygame.transform.scale(bg_r, (img_width, img_height))
 
-def main(map_):
-    pygame.init()  # 初始化pygame
-    width, height = 1400, 800  # 設定視窗大小
 
-    game_display = pygame.display.set_mode((width,height))
-    ticker = pygame.time.Clock()
-    background = (230, 230, 200) # 背景顏色
+class Game():
 
-    world, player = build_map(map_)
+    def __init__(self, level):
+        pygame.init()  # 初始化pygame
+        width, height = 1400, 800  # 設定視窗大小
+        self.game_display = pygame.display.set_mode((width, height))
+        self.ticker = pygame.time.Clock()
+        self.background = (230, 230, 200)  # 背景顏色
+        self.level = level
+        self.map_ = maps.get_map(level)
+        self.build_world()
+        self.key_cooldown = time.time()
 
-    in_game = True
-    while in_game:
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                in_game = False
+    def run_game(self):
+        in_game = True
+        while in_game:
+            events = pygame.event.get()
+            for event in events:
+                if event.type == pygame.QUIT:
+                    in_game = False
 
-        game_display.fill(background)
-        draw_world(world, game_display)
-        game_display.blit(player.img(), player.pos())
+            self.game_display.fill(self.background)
+            self.update_world()
+            self.draw_world()
+            self.game_display.blit(self.player.img(), self.player.pos())
 
-        pygame.display.update()
-        ticker.tick(60) # 60 fps
+            pygame.display.update()
+            self.ticker.tick(60)  # 60 fps
 
-        # 按鍵輸入處理
+            self.key_handle()
+
+        pygame.quit()
+
+    # 按鍵輸入處理
+    def key_handle(self):
         keys = pygame.key.get_pressed()
+
+        # player movement
         if keys[pygame.K_UP]:
-            player.move(0, -element.consts.PLAYER_VELOCITY, world)
-            player.set_dir(element.direction.UP)
+            self.player.move(0, -element.consts.PLAYER_VELOCITY, self.world)
+            self.player.set_dir(element.direction.UP)
         elif keys[pygame.K_DOWN]:
-            player.move(0, element.consts.PLAYER_VELOCITY, world)
-            player.set_dir(element.direction.DOWN)
+            self.player.move(0, element.consts.PLAYER_VELOCITY, self.world)
+            self.player.set_dir(element.direction.DOWN)
         elif keys[pygame.K_LEFT]:
-            player.move(-element.consts.PLAYER_VELOCITY, 0, world)
-            player.set_dir(element.direction.LEFT)
+            self.player.move(-element.consts.PLAYER_VELOCITY, 0, self.world)
+            self.player.set_dir(element.direction.LEFT)
         elif keys[pygame.K_RIGHT]:
-            player.move(element.consts.PLAYER_VELOCITY, 0, world)
-            player.set_dir(element.direction.RIGHT)
+            self.player.move(element.consts.PLAYER_VELOCITY, 0, self.world)
+            self.player.set_dir(element.direction.RIGHT)
 
-    pygame.quit()
+        # game restart
+        if keys[pygame.K_r]:
+            now = time.time()
+            if now - self.key_cooldown > element.consts.KEY_COOLDOWN:
+                self.restart()
+                self.key_cooldown = now
 
-# 建構地圖
-def build_map(map_: str):
-    world = []
+        # game pause
+        # todo
+        if keys[pygame.K_ESCAPE]:
+            pass
 
-    x, y = 0, 0
-    for i, v in enumerate(map_):
-        if v == "\n":
-            y += 40
-            x = 0
-        elif v == "H":
-            world.append(element.Border(x, y))
-        elif v == "#":
-            world.append(element.Wall(x, y))
-        elif v == ".":
-            world.append(element.Goal(x, y))
-        elif v == "$":
-            world.append(element.Box(x, y))
-        elif v == "%":
-            world.append(element.Goal(x, y))
-            world.append(element.Box(x, y))
-        elif v == "!":
-            world.append(element.Police(x, y))
-        elif v == "@":
-            temp = element.Player(x, y, 0)
-            world.append(temp)
-        x += 40
+        # player attack
+        if keys[pygame.K_SPACE]:
+            if self.player.shoot():
+                player_x, player_y = self.player.pos()
+                player_dir = self.player.direction()
+                self.world.append(element.Bullet(
+                    player_x, player_y, player_dir))
 
-    return world, temp
+    # 建構地圖
+    def build_world(self):
+        self.world = []
 
-# 畫在螢幕
-def draw_world(world, game_display):
-    for obj in world:
-        game_display.blit(obj.img(), obj.pos())
+        x, y = 0, 0
+        for i, v in enumerate(self.map_):
+            if v == "\n":
+                y += 40
+                x = 0
+            elif v == "H":
+                self.world.append(element.Border(x, y))
+            elif v == "#":
+                self.world.append(element.Wall(x, y))
+            elif v == ".":
+                self.world.append(element.Goal(x, y))
+            elif v == "$":
+                self.world.append(element.Box(x, y))
+            elif v == "%":
+                self.world.append(element.Goal(x, y))
+                self.world.append(element.Box(x, y))
+            elif v == "!":
+                self.world.append(element.Police(x, y))
+            elif v == "@":
+                self.player = element.Player(x, y, 0)
+                self.world.append(self.player)
+            x += 40
+
+    # 遊戲邏輯處理，更新遊戲狀態
+    def update_world(self):
+        for item in self.world:
+            # 子彈位置更新
+            if isinstance(item, element.Bullet):
+                item.update(self.world)
+            elif isinstance(item, element.Police):
+                item.update(self.world)
+
+    # 畫在螢幕上
+    def draw_world(self):
+        for obj in self.world:
+            self.game_display.blit(obj.img(), obj.pos())
+
+    def restart(self):
+        self.build_world()
+
 
 if __name__ == "__main__":
-    import maps
-    main(maps.get_map(2))
+    game = Game(9)
+    game.run_game()

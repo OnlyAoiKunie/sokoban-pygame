@@ -18,16 +18,14 @@ class Box(Object):
 
     def move(self, delta_x, delta_y, world):
         super().move(delta_x, delta_y)
-        if self.is_collide(world):
+        if self.__is_collide(world):
             super().move(-delta_x, -delta_y)
 
-    def is_collide(self, world):
+    def __is_collide(self, world):
         box_x, box_y = super().pos()
         for item in world:
             # 比對到自己則跳過
-            if item.pos() == self.pos():
-                continue
-            if isinstance(item, Goal):
+            if item is self or isinstance(item, Goal):
                 continue
             item_x, item_y = item.pos()
             if abs(item_x - box_x) < consts.GAP and abs(item_y - box_y) < consts.GAP:
