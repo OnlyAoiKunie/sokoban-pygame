@@ -1,7 +1,7 @@
 from element.obj import Object
 from pygame import image
 
-img = image.load("imgs/wall.png")
+img = image.load("imgs/wall.png").convert_alpha()
 
 
 class Wall(Object):

@@ -1,7 +1,7 @@
 from element.obj import Object
 from pygame import image
 
-img = image.load("imgs/goal.png")
+img = image.load("imgs/goal.png").convert_alpha()
 
 
 class Goal(Object):

@@ -5,11 +5,11 @@ from element import consts
 
 imgs = [_ for _ in range(4)]
 
-img = image.load("imgs/guard/up.png")
+img = image.load("imgs/guard/up.png").convert_alpha()
 imgs[direction.UP] = img
-img = image.load("imgs/guard/down.png")
+img = image.load("imgs/guard/down.png").convert_alpha()
 imgs[direction.DOWN] = img
-img = image.load("imgs/guard/right.png")
+img = image.load("imgs/guard/right.png").convert_alpha()
 imgs[direction.RIGHT] = img
 img = transform.flip(img, True, False)
 imgs[direction.LEFT] = img

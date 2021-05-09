@@ -13,11 +13,11 @@ left_imgs = []
 right_imgs = []
 
 for i in range(3):
-    img = image.load(f"imgs/player/up_{i}.png")
+    img = image.load(f"imgs/player/up_{i}.png").convert_alpha()
     up_imgs.append(img)
-    img = image.load(f"imgs/player/down_{i}.png")
+    img = image.load(f"imgs/player/down_{i}.png").convert_alpha()
     down_imgs.append(img)
-    img = image.load(f"imgs/player/right_{i}.png")
+    img = image.load(f"imgs/player/right_{i}.png").convert_alpha()
     right_imgs.append(img)
     img = transform.flip(img, True, False)
     left_imgs.append(img)

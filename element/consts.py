@@ -1,5 +1,8 @@
 IMG_SIZE = 40  # pixel
 GAP = IMG_SIZE - 4  # pixel
+BOX_SIZE = 24
+BOX_GAP = 24
+BOX_OFFSET = (IMG_SIZE - BOX_SIZE) // 2
 
 BULLET_VELOCITY = 10  # pixel
 PLAYER_VELOCITY = 4  # pixel

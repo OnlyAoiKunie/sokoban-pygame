@@ -1,7 +1,7 @@
 from element.obj import Object
 from pygame import image
 
-img = image.load("imgs/arrow.png")
+img = image.load("imgs/arrow.png").convert_alpha()
 
 
 class Arrow(Object):

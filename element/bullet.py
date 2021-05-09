@@ -5,7 +5,7 @@ from element.goal import Goal
 from element import consts, direction
 from pygame import image
 
-img = image.load("imgs/bullet.png")
+img = image.load("imgs/bullet.png").convert_alpha()
 
 
 class Bullet(Object):

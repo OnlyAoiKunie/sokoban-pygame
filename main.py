@@ -1,6 +1,10 @@
 import pygame
 import time
 
+pygame.init()  # 初始化pygame
+width, height = 1600, 800  # 設定視窗大小
+screen = pygame.display.set_mode((width, height))
+
 import element
 import maps
 
@@ -9,16 +13,19 @@ import maps
 
 class Game():
 
-    def __init__(self, level):
-        pygame.init()  # 初始化pygame
-        width, height = 1400, 800  # 設定視窗大小
-        self.game_display = pygame.display.set_mode((width, height))
+    def __init__(self, level, mask_enabled=True):
+        self.screen = screen
         self.ticker = pygame.time.Clock()
         self.background = (230, 230, 200)  # 背景顏色
         self.level = level
         self.map_ = maps.get_map(level)
         self.build_world()
         self.key_cooldown = time.time()
+
+        self.mask_enabled = mask_enabled
+        if self.mask_enabled:
+            player_x, player_y = self.player.pos()
+            self.mask = element.Mask(player_x, player_y)
 
     def run_game(self):
         in_game = True
@@ -28,15 +35,16 @@ class Game():
                 if event.type == pygame.QUIT:
                     in_game = False
 
-            self.game_display.fill(self.background)
+            self.screen.fill(self.background)
             self.update_world()
             self.draw_world()
-            self.game_display.blit(self.player.img(), self.player.pos())
+            self.screen.blit(self.player.img(), self.player.pos())
 
             pygame.display.update()
             self.ticker.tick(60)  # 60 fps
 
             self.key_handle()
+            print(f" fps:{self.ticker.get_fps()}\r", end="")
 
         pygame.quit()
 
@@ -75,8 +83,7 @@ class Game():
             if self.player.shoot():
                 player_x, player_y = self.player.pos()
                 player_dir = self.player.direction()
-                self.world.append(element.Bullet(
-                    player_x, player_y, player_dir))
+                self.world.append(element.Bullet(player_x, player_y, player_dir))
 
     # 建構地圖
     def build_world(self):
@@ -117,12 +124,17 @@ class Game():
     # 畫在螢幕上
     def draw_world(self):
         for obj in self.world:
-            self.game_display.blit(obj.img(), obj.pos())
+            self.screen.blit(obj.img(), obj.pos())
+        
+        if self.mask_enabled:
+            player_x, player_y = self.player.pos()
+            self.screen.blit(self.mask.img(), (player_x-self.mask.offset_x, player_y-self.mask.offset_y))
 
     def restart(self):
         self.build_world()
 
 
 if __name__ == "__main__":
-    game = Game(9)
+    # debugging now, mask_enabled should be True
+    game = Game(level=9, mask_enabled=False)
     game.run_game()
