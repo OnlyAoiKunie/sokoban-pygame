@@ -3,10 +3,13 @@ import pygame
 
 import parameter
 
+RESUME = 0
+RESTART = 1
+EXIT = 2
+
 
 class Pause():
     def __init__(self):
-        self.__stw = False
         self.__selection = 0
         self.__normal_font = pygame.font.SysFont("default", 32)
         self.__selected_font = pygame.font.SysFont("default", 60)
@@ -16,11 +19,11 @@ class Pause():
         self.__cooldown = time.time()
 
     def update(self, screen):
+        keys = pygame.key.get_pressed()
         now = time.time()
         if now - self.__cooldown > parameter.PAUSE_KEY_COOLDOWN:
             self.__cooldown = now
-            keys = pygame.key.get_pressed()
-
+            
             if keys[pygame.K_UP]:
                 self.__selection -= 1
             elif keys[pygame.K_DOWN]:
@@ -30,6 +33,12 @@ class Pause():
                 self.__selection %= 3
 
         self.__draw(screen)
+
+        # press enter
+        if keys[pygame.K_RETURN]:
+            act = self.__selection
+            self.__selection = 0
+            return act
 
     def __draw(self, screen):
         text = self.__render_text("resume", 0)

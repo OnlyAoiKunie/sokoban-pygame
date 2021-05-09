@@ -47,7 +47,14 @@ class Game():
             self.screen.fill(self.background)
             
             if self.STW:
-                self.game_pause.update(self.screen)
+                selection = self.game_pause.update(self.screen)
+                if selection == frame.pause.RESUME:
+                    self.STW = False
+                elif selection == frame.pause.RESTART:
+                    self.restart()
+                    self.STW = False
+                elif selection == frame.pause.EXIT:
+                    in_game = False
             else:
                 self.update_world()
                 self.key_handle()

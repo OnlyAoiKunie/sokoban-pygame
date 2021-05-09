@@ -1,6 +1,10 @@
 # sokoban
 an unusual sokoban made with pygame2.0
 
+# How To Play
+按空白鍵 => 攻擊
+按ESC => 暫停
+
 # TODO
 - [ ] 遊戲破關偵測  
 - [ ] 遊戲主畫面UI  
