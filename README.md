@@ -2,7 +2,7 @@
 an unusual sokoban made with pygame2.0
 
 # How To Play
-按空白鍵 => 攻擊
+按空白鍵 => 攻擊  
 按ESC => 暫停
 
 # TODO
@@ -11,7 +11,7 @@ an unusual sokoban made with pygame2.0
 - [ ] 警衛行動模式  
 - [ ] quadtree  
 - [ ] 玩家技能  
-- [ ] 暫停畫面  
+- [X] 暫停畫面  
 - [ ] 破關畫面  
 
 # Bugs
