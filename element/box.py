@@ -4,11 +4,12 @@ from element import consts
 from pygame import image
 import random
 
-imgs = [ _ for _ in range(10) ]
+imgs = [_ for _ in range(10)]
 
 for i in range(10):
     img = image.load(f"imgs/treasures/{i}.png")
     imgs[i] = img
+
 
 class Box(Object):
     def __init__(self, x, y):
@@ -31,6 +32,7 @@ class Box(Object):
             if abs(item_x - box_x) < consts.GAP and abs(item_y - box_y) < consts.GAP:
                 return True
         return False
+
 
 if __name__ == "__main__":
     b = Box(10, 10)

@@ -1,9 +1,9 @@
-IMG_SIZE = 40 # pixel
-GAP = IMG_SIZE - 4 # pixel
+IMG_SIZE = 40  # pixel
+GAP = IMG_SIZE - 4  # pixel
 
-BULLET_VELOCITY = 10 # pixel
-PLAYER_VELOCITY = 4 # pixel
+BULLET_VELOCITY = 10  # pixel
+PLAYER_VELOCITY = 4  # pixel
 POLICE_VELOCITY = 4
 
-BULLET_COOLDOWN = 0.2 # sec
+BULLET_COOLDOWN = 0.2  # sec
 KEY_COOLDOWN = 0.5

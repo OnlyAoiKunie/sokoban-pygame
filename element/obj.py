@@ -20,6 +20,7 @@ class Object:
     def set_img(self, img):
         self.__img = img
 
+
 if __name__ == "__main__":
     o = Object(1, 1)
     print(o.name())

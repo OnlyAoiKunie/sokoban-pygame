@@ -24,6 +24,7 @@ for i in range(3):
 
 imgs = [up_imgs, down_imgs, left_imgs, right_imgs]
 
+
 class Player(Object):
     def __init__(self, x, y, skin: int):
         super().__init__(x, y)
@@ -72,12 +73,13 @@ class Player(Object):
                 if isinstance(item, Box):
                     prev_pos = item.pos()
                     item.move(delta_x, delta_y, world)
-                    return prev_pos == item.pos() # 如果箱子位置沒變，則箱子已經碰撞其他object
+                    return prev_pos == item.pos()  # 如果箱子位置沒變，則箱子已經碰撞其他object
                 return True
         return False
 
     def __img(self):
         return imgs[self.__dir][self.__skin]
+
 
 if __name__ == "__main__":
     p = Player(1, 1, 2)

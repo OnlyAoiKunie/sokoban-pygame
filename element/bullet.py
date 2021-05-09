@@ -7,6 +7,7 @@ from pygame import image
 
 img = image.load("imgs/bullet.png")
 
+
 class Bullet(Object):
     def __init__(self, x, y, bullet_dir):
         super().__init__(x, y)
@@ -40,6 +41,7 @@ class Bullet(Object):
                 if isinstance(item, Police):
                     world.remove(item)
                 return
+
 
 if __name__ == "__main__":
     pass
