@@ -5,13 +5,16 @@ from pygame import image, rect
 import random
 
 img = image.load("imgs/boxes.webp").convert_alpha()
+imgs = [ _ for _ in range(10) ]
+for i, _ in enumerate(imgs):
+    offset = consts.BOX_SIZE * i
+    rect_ = rect.Rect(offset, 0, consts.BOX_SIZE, consts.BOX_SIZE)
+    imgs[i] = img.subsurface(rect_)
 
 class Box(Object):
     def __init__(self, x, y):
         super().__init__(x + consts.BOX_OFFSET, y + consts.BOX_OFFSET)
-        random_box = consts.BOX_SIZE * random.randint(0, 9)
-        self.__rect = rect.Rect(random_box, 0, consts.BOX_SIZE, consts.BOX_SIZE)
-        self.__img = img.subsurface(self.__rect)
+        self.__img = random.choice(imgs)
         super().set_img(self.__img)
 
     def move(self, delta_x, delta_y, world):
