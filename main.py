@@ -2,6 +2,7 @@ import pygame
 import time
 
 pygame.init()  # 初始化pygame
+pygame.font.init()
 width, height = 1600, 800  # 設定視窗大小
 screen = pygame.display.set_mode((width, height))
 
@@ -22,6 +23,8 @@ class Game():
         self.build_world()
         self.key_cooldown = time.time()
 
+        self.display_font = pygame.font.SysFont("default", 32)
+
         self.mask_enabled = mask_enabled
         if self.mask_enabled:
             player_x, player_y = self.player.pos()
@@ -40,11 +43,18 @@ class Game():
             self.draw_world()
             self.screen.blit(self.player.img(), self.player.pos())
 
+            text = " fps: {:.03f}".format(self.ticker.get_fps())
+            text = self.display_font.render(text, False, (0, 0, 0))
+            self.screen.blit(text, (1440, 740))
+
+            text = " objects: {}".format(len(self.world))
+            text = self.display_font.render(text, False, (0, 0, 0))
+            self.screen.blit(text, (1440, 770))
+
             pygame.display.update()
             self.ticker.tick(60)  # 60 fps
 
             self.key_handle()
-            print(f" fps:{self.ticker.get_fps()}\r", end="")
 
         pygame.quit()
 
