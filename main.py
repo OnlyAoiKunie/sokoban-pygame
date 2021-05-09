@@ -15,7 +15,11 @@ import frame
 
 
 class Game():
-
+    """
+    level 表示第幾關
+    mask 是用來增加遊戲難度的物件，mask_enabled決定mask是否啟用，
+    debug時不啟用mask
+    """
     def __init__(self, level, mask_enabled=True):
         self.screen = screen
         self.ticker = pygame.time.Clock()
@@ -24,8 +28,8 @@ class Game():
         self.map_ = maps.get_map(level)
         self.build_world()
         self.key_cooldown = time.time()
-        self.game_pause = frame.pause.Pause()
-        self.STW = False
+        self.game_pause = frame.pause.Pause() # pause frame
+        self.STW = False # stop the world (pause)
 
         self.display_font = pygame.font.SysFont("default", 32)
 
@@ -37,11 +41,13 @@ class Game():
     def run_game(self):
         in_game = True
         while in_game:
+            # 基礎事件
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
                     in_game = False
 
+            # 背景色
             self.screen.fill(self.background)
             
             if self.STW:
@@ -59,10 +65,12 @@ class Game():
                 self.draw_world()
                 self.screen.blit(self.player.img(), self.player.pos())
 
+            # debug用資訊
             text = " fps: {:.1f}".format(self.ticker.get_fps())
             text = self.display_font.render(text, False, (0, 0, 0))
             self.screen.blit(text, (1440, 740))
 
+            # debug用資訊
             text = " objects: {}".format(len(self.world))
             text = self.display_font.render(text, False, (0, 0, 0))
             self.screen.blit(text, (1440, 770))
@@ -107,23 +115,23 @@ class Game():
 
         x, y = 0, 0
         for i, v in enumerate(self.map_):
-            if v == "\n":
+            if v == "\n": # 換行
                 y += 40
                 x = 0
-            elif v == "H":
+            elif v == "H": # 邊界
                 self.world.append(element.Border(x, y))
-            elif v == "#":
+            elif v == "#": # 牆
                 self.world.append(element.Wall(x, y))
-            elif v == ".":
+            elif v == ".": # 終點
                 self.world.append(element.Goal(x, y))
-            elif v == "$":
+            elif v == "$": # 箱子
                 self.world.append(element.Box(x, y))
-            elif v == "%":
+            elif v == "%": # 終點上有箱子
                 self.world.append(element.Goal(x, y))
                 self.world.append(element.Box(x, y))
-            elif v == "!":
+            elif v == "!": # 警衛
                 self.world.append(element.Guard(x, y))
-            elif v == "@":
+            elif v == "@": # 玩家（初始）位置
                 self.player = element.Player(x, y, 0)
                 self.world.append(self.player)
             x += 40
@@ -143,6 +151,7 @@ class Game():
         for obj in self.world:
             self.screen.blit(obj.img(), obj.pos())
         
+        # 如果mask啟用，畫在player身邊
         if self.mask_enabled:
             player_x, player_y = self.player.pos()
             self.screen.blit(self.mask.img(), (player_x-self.mask.offset_x, player_y-self.mask.offset_y))

@@ -1,8 +1,9 @@
-# 物件原形
+# 物件原形，其他物件繼承此物件
 class Object:
     def __init__(self, x, y):
         self.__x, self.__y = x, y
-        
+    
+    # 移動
     def move(self, delta_x, delta_y):
         self.__x += delta_x
         self.__y += delta_y

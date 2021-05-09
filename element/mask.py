@@ -5,6 +5,10 @@ img = image.load("imgs/mask.webp").convert_alpha()
 
 
 class Mask:
+    """
+    增加遊戲難度用的物件
+    用來限制視野
+    """
     def __init__(self, x, y):
         self.__x, self.__y = x, y
         self.__img = img

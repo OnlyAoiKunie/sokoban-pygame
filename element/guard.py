@@ -3,6 +3,7 @@ from pygame import image, transform
 from element import direction
 import parameter
 
+# 初始化圖片
 imgs = [_ for _ in range(4)]
 
 img = image.load("imgs/guard/up.png").convert_alpha()
@@ -43,6 +44,10 @@ class Guard(Object):
         super().move(move_x, move_y)
         if self.__is_collide(world):
             super().move(-move_x, -move_y)
+
+    """TODO"""
+    def __behavior(self):
+        pass
 
     def __is_collide(self, world: list) -> bool:
         police_x, police_y = super().pos()

@@ -4,6 +4,7 @@ import parameter
 from pygame import image, rect
 import random
 
+# 初始化所有圖片
 img = image.load("imgs/boxes.webp").convert_alpha()
 imgs = [_ for _ in range(10)]
 for i, _ in enumerate(imgs):
@@ -26,7 +27,7 @@ class Box(Object):
     def __is_collide(self, world):
         box_x, box_y = super().pos()
         for item in world:
-            # 比對到自己則跳過
+            # 比對到自己則跳過（比對到終點也跳過）
             if item is self or isinstance(item, Goal):
                 continue
             item_x, item_y = item.pos()

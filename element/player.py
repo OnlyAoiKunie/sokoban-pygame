@@ -7,6 +7,7 @@ import parameter
 
 import time
 
+# 初始化圖片
 up_imgs = []
 down_imgs = []
 left_imgs = []
@@ -41,9 +42,11 @@ class Player(Object):
     def direction(self):
         return self.__dir
 
+    # 增加子彈
     def add_ammo(self, delta):
         self.__ammo += delta
 
+    # 攻擊，回傳是否成功（有沒有子彈）
     def shoot(self) -> bool:
         if self.__ammo < 0:
             return False
@@ -54,6 +57,7 @@ class Player(Object):
             return True
         return False
 
+    # 當前擁有子彈數
     def ammos(self) -> int:
         return self.__ammo
 
