@@ -99,7 +99,7 @@ class Game():
                 self.world.append(element.Goal(x, y))
                 self.world.append(element.Box(x, y))
             elif v == "!":
-                self.world.append(element.Police(x, y))
+                self.world.append(element.Guard(x, y))
             elif v == "@":
                 self.player = element.Player(x, y, 0)
                 self.world.append(self.player)
@@ -111,7 +111,7 @@ class Game():
             # 子彈位置更新
             if isinstance(item, element.Bullet):
                 item.update(self.world)
-            elif isinstance(item, element.Police):
+            elif isinstance(item, element.Guard):
                 item.update(self.world)
 
     # 畫在螢幕上

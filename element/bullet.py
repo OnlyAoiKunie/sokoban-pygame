@@ -1,6 +1,6 @@
 from element.obj import Object
 from element.player import Player
-from element.police import Police
+from element.guard import Guard
 from element.goal import Goal
 from element import consts, direction
 from pygame import image
@@ -38,7 +38,7 @@ class Bullet(Object):
             item_x, item_y = item.pos()
             if abs(item_x - bullet_x) < consts.GAP and abs(item_y - bullet_y) < consts.GAP:
                 world.remove(self)
-                if isinstance(item, Police):
+                if isinstance(item, Guard):
                     world.remove(item)
                 return
 

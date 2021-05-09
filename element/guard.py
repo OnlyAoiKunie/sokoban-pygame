@@ -5,22 +5,22 @@ from element import consts
 
 imgs = [_ for _ in range(4)]
 
-img = image.load("imgs/police/up.png")
+img = image.load("imgs/guard/up.png")
 imgs[direction.UP] = img
-img = image.load("imgs/police/down.png")
+img = image.load("imgs/guard/down.png")
 imgs[direction.DOWN] = img
-img = image.load("imgs/police/right.png")
+img = image.load("imgs/guard/right.png")
 imgs[direction.RIGHT] = img
 img = transform.flip(img, True, False)
 imgs[direction.LEFT] = img
 
 
-class Police(Object):
+class Guard(Object):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.__dir = direction.DOWN
         super().set_img(self.__img())
-        self.__velocity = consts.POLICE_VELOCITY
+        self.__velocity = consts.GUARD_VELOCITY
 
     def set_dir(self, direction):
         self.__dir = direction
@@ -59,5 +59,5 @@ class Police(Object):
 
 
 if __name__ == "__main__":
-    p = Police(10, 10)
-    print(p.pos())
+    g = Guard(10, 10)
+    print(g.pos())
