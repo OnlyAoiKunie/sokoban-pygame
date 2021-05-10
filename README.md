@@ -7,6 +7,7 @@ an unusual sokoban made with pygame 2.0
 
 # TODO
 - [ ] 遊戲破關偵測  
+- [ ] 玩家死亡判斷  
 - [ ] 遊戲主畫面UI  
 - [ ] 警衛行動模式  
 - [ ] quadtree  
@@ -19,6 +20,8 @@ an unusual sokoban made with pygame 2.0
 - [ ] 支援多種螢幕解析度  
 - [ ] 提示玩家所在位置  
 - [ ] 計時、計分系統  
+- [ ] 新手教學  
+- [ ] 新增關卡  
 
 # Bugs
 箱子與人物的碰撞偵測修正  
