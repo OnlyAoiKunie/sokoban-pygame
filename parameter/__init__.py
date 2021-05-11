@@ -15,6 +15,8 @@ BOX_OFFSET = (IMG_SIZE - BOX_SIZE) // 2  # 箱子顯示的偏移量
 BULLET_VELOCITY = 10  # pixel
 PLAYER_VELOCITY = 4  # pixel
 GUARD_VELOCITY = 4
+GUARD_INERITA = 45 # 警衛朝同一方向移動的時間（單位:frame）
+GUARD_SLEEP = 20 # 警衛變換方向時留在原地的時間（單位:frame）
 
 # 避免按鍵重複觸發的冷卻時間
 BULLET_COOLDOWN = 0.2  # sec

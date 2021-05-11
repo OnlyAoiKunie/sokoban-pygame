@@ -23,14 +23,35 @@ class Guard(Object):
         super().set_img(self.__img())
         self.__velocity = parameter.GUARD_VELOCITY
 
+        self.__inerita = 0
+        self.__sleep = 0
+
+        current = direction.random_dir()
+        self.set_dir(current)
+
     def set_dir(self, direction):
         self.__dir = direction
         super().set_img(self.__img())
 
-    # 移動
+    # 更新
     def update(self, world: list):
-        current = direction.random_dir()
-        self.set_dir(current)
+        if self.__sleep < parameter.GUARD_SLEEP:
+            self.__sleep += 1
+            return
+        elif self.__sleep == parameter.GUARD_SLEEP:
+            current = direction.random_dir()
+            self.set_dir(current)
+            self.__sleep += 1
+
+        if self.__inerita > parameter.GUARD_INERITA:
+            self.__inerita = 0
+            self.__sleep = 0
+
+        self.__behavior(world)
+        self.__inerita += 1
+
+    # 移動
+    def __behavior(self, world: list):
         if self.__dir == direction.DOWN:
             move_x, move_y = 0, self.__velocity
         elif self.__dir == direction.UP:
@@ -44,10 +65,6 @@ class Guard(Object):
         super().move(move_x, move_y)
         if self.__is_collide(world):
             super().move(-move_x, -move_y)
-
-    """TODO"""
-    def __behavior(self):
-        pass
 
     def __is_collide(self, world: list) -> bool:
         police_x, police_y = super().pos()
