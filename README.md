@@ -9,7 +9,7 @@ an unusual sokoban made with pygame 2.0
 - [ ] 遊戲破關偵測  
 - [ ] 玩家死亡判斷  
 - [ ] 遊戲主畫面UI  
-- [ ] 警衛行動模式  
+- [X] 警衛行動模式  
 - [ ] quadtree  
 - [ ] 玩家技能  
 - [X] 暫停畫面  
