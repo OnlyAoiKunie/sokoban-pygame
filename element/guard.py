@@ -1,3 +1,4 @@
+from element.box import Box
 from typing import Tuple
 from element import player
 from element.obj import Object
