@@ -134,6 +134,8 @@ class Game():
             elif v == "@": # 玩家（初始）位置
                 self.player = element.Player(x, y, 0)
                 self.world.append(self.player)
+            elif v == "P":
+                self.world.append(element.Portal(x, y))
             x += 40
 
     # 遊戲邏輯處理，更新遊戲狀態
@@ -145,6 +147,8 @@ class Game():
             # 警衛移動
             elif isinstance(item, element.Guard):
                 item.update(self.world)
+            elif isinstance(item, element.Portal):
+                item.update()
 
     # 畫在螢幕上
     def draw_world(self):
