@@ -30,7 +30,7 @@ imgs = [up_imgs, down_imgs, left_imgs, right_imgs]
 class Player(Object):
     def __init__(self, x, y, skin: int):
         super().__init__(x, y)
-        self.__ammo = 3
+        self.__ammo = parameter.INIT_BULLET_NUM
         self.__isdead = False
         self.__skin = skin
         self.__dir = direction.DOWN
@@ -53,7 +53,7 @@ class Player(Object):
 
     # 攻擊，回傳是否成功（有沒有子彈）
     def shoot(self) -> bool:
-        if self.__ammo < 0:
+        if self.__ammo <= 0:
             return False
         now = time.time()
         if now - self.__cooldown > parameter.BULLET_COOLDOWN:
