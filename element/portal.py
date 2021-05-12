@@ -15,12 +15,14 @@ class Portal(Object):
     def __init__(self, x, y):
         super().__init__(x, y)
         self.__img_index = 0
-        self.__frame = 0
+        self.__frame = 0 # 播放的幀數
         super().set_img(imgs[self.__img_index])
 
     def update(self):
         self.__frame += 1
-        if self.__frame % parameter.PORTAL_DELAY == 0:
+        # 每隔 protal_delay個幀，更新下一個圖片
+        if self.__frame >= parameter.PORTAL_DELAY:
+            self.__frame = 0
             self.__img_index += 1
             if self.__img_index >= len(imgs):
                 self.__img_index = 0
