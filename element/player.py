@@ -45,6 +45,8 @@ class Player(Object):
         return self.__dir
     def isdead(self):
         return self.__isdead
+    def Set_Dead(self):
+        self.__isdead = True        
     # 增加子彈
     def add_ammo(self, delta):
         self.__ammo += delta
@@ -82,7 +84,7 @@ class Player(Object):
                     item.move(delta_x, delta_y, world)
                     return prev_pos == item.pos()  # 如果箱子位置沒變，則箱子已經碰撞其他object
                 if isinstance(item,Guard):
-                    self.__isdead = True
+                    self.Set_Dead()
                 return True
         return False
 

@@ -76,7 +76,7 @@ class Guard(Object):
             item_x, item_y = item.pos()
             if abs(police_x - item_x) < parameter.GAP and abs(police_y - item_y) < parameter.GAP:
                 if isinstance(item , player.Player):
-                    item.__isdead = True
+                    item.Set_Dead()
                 return True
         return False
 
