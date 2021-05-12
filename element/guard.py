@@ -1,3 +1,6 @@
+from element.box import Box
+from typing import Tuple
+from element import player
 from element.obj import Object
 from pygame import image, transform
 from element import direction
@@ -72,7 +75,9 @@ class Guard(Object):
             if item is self:
                 continue
             item_x, item_y = item.pos()
-            if abs(item_x - police_x) < parameter.GAP and abs(item_y - police_y) < parameter.GAP:
+            if abs(police_x - item_x) < parameter.GAP and abs(police_y - item_y) < parameter.GAP:
+                if isinstance(item , player.Player):
+                    item.Set_Dead()
                 return True
         return False
 
