@@ -1,3 +1,4 @@
+from typing import Tuple
 import pygame
 import time
 
@@ -8,7 +9,6 @@ import parameter
 
 # 設定視窗大小
 screen = pygame.display.set_mode((parameter.WIN_WIDTH, parameter.WIN_HEIGHT))
-
 import element
 import maps
 import frame
@@ -80,6 +80,9 @@ class Game():
 
         pygame.quit()
 
+    def gameover(self):
+        print("game over")
+        
     # 按鍵輸入處理
     def key_handle(self):
         keys = pygame.key.get_pressed()
@@ -135,6 +138,7 @@ class Game():
                 self.player = element.Player(x, y, 0)
                 self.world.append(self.player)
             x += 40
+        
 
     # 遊戲邏輯處理，更新遊戲狀態
     def update_world(self):
@@ -145,6 +149,11 @@ class Game():
             # 警衛移動
             elif isinstance(item, element.Guard):
                 item.update(self.world)
+        #玩家死亡
+        if self.player.isdead() == True:
+            self.gameover()
+
+
 
     # 畫在螢幕上
     def draw_world(self):

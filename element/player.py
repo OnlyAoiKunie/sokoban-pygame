@@ -1,5 +1,6 @@
 from element.obj import Object
 from element.box import Box
+from element.guard import Guard
 from element.goal import Goal
 from pygame import image, transform
 from element import direction
@@ -30,6 +31,7 @@ class Player(Object):
     def __init__(self, x, y, skin: int):
         super().__init__(x, y)
         self.__ammo = 3
+        self.__isdead = False
         self.__skin = skin
         self.__dir = direction.DOWN
         super().set_img(self.__img())
@@ -41,7 +43,8 @@ class Player(Object):
 
     def direction(self):
         return self.__dir
-
+    def isdead(self):
+        return self.__isdead
     # 增加子彈
     def add_ammo(self, delta):
         self.__ammo += delta
@@ -78,6 +81,8 @@ class Player(Object):
                     prev_pos = item.pos()
                     item.move(delta_x, delta_y, world)
                     return prev_pos == item.pos()  # 如果箱子位置沒變，則箱子已經碰撞其他object
+                if isinstance(item,Guard):
+                    self.__isdead = True
                 return True
         return False
 
