@@ -9,5 +9,7 @@ from element.portal import Portal
 from element.guard import Guard
 from element.mask import Mask
 from element.wall import Wall
+from element.obj import ObjectID
 from element import direction
 print("done")
+
