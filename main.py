@@ -10,7 +10,6 @@ import parameter
 screen = pygame.display.set_mode((parameter.WIN_WIDTH, parameter.WIN_HEIGHT))
 
 import element
-from element.obj import ObjectID
 import maps
 import frame
 

@@ -5,7 +5,7 @@ from element.obj import Object, ObjectID
 from element import direction
 import parameter
 
-img = pygame.image.load("imgs/bullet.png").convert_alpha()
+img = pygame.image.load("imgs/bullet.webp").convert_alpha()
 
 
 class Bullet(Object):
