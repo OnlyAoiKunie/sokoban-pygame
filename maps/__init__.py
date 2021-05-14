@@ -173,21 +173,21 @@ HHHHHHHHHHHHHHHHHHHHHHH
 # map 9
 """
 HHHHHHHHHHHHHHHHHHHHHHHH
-H###...HHHHHHHH  ######H
-H###.       $ H $    .HH
-HHHH$ $HHHHHH!H.......HH
-HH$H$  H.HH#H H $ $$$ HH
-H$  $$$   H#H H $  $  HH
-H $$$  $$.H#H H HHHHH HH
-HH  $  $ HH#H H      $HH
-HH   HHHHH!  !HHHHHHH HH
-HH$ $!   !      !$   @HH
-H    HH !   !     HHH HH
-HH $ .HHHH!   ! ##HHH$HH
-HH H$$  .HHHHHHHHHH   HH
-HH. $    HH!    $     HH
-HHHHH $.HHH  $$$    ...H
-H####   .HH $    P  ...H
+H###...########  ######H
+H###.       $ # $    .#H
+H###$ $######!#.......#H
+H#$#$  #.#### # $ $$$ #H
+H$  $$$   ### # $  $  #H
+H $$$  $$.### # ##### #H
+H#  $  $ #### #      $#H
+H#   #####!  !####### #H
+H#$ $!   !      !$   @#H
+H    ## !   !     ### #H
+H# $ .####!   ! #####$#H
+H# #$$  .##########   #H
+H#. $    ##!    $     #H
+H#### $.###  $$$    ...H
+H####   .## $    P  ...H
 HHHHHHHHHHHHHHHHHHHHHHHH
 """
 ]
