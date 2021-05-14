@@ -1,3 +1,6 @@
+class UnknowIdentifierError(Exception):
+    pass
+
 __maps = [
 # map 0 (exception, debugging)
 """
@@ -26,7 +29,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHH
 H########################H
 H#.########  !     $.####H
 H# ########$  ###### ####H
-H#!   #####  $###^##!####H
+H#!   #####  $######!####H
 H# ######  $ $ ##### ####H
 H#$###### # ## ##### ####H
 H# ####   # ## #####  ..#H
@@ -46,7 +49,7 @@ H# ## #       ####  H
 H# ##   $#$#@  #    H 
 H  ##  !   $ #   $ #H 
 H   #%#  ######## ##H 
-H   ##! .....   # #^H 
+H   ##! .....   # ##H 
 H## ##  .....   # ##H 
 H  $#########  ##$  H 
 H   #  !#   #   #   H 
@@ -66,7 +69,7 @@ H#####    ###  ####  ######   ### #H
 H###  $   #                 #     #H
 H###!#     $ #####$   ###       ###H
 H# $ # ##### ###      #   ##### ###H
-H#      ##        #####       ! #^#H
+H#      ##        #####       ! ###H
 H###   ###@##$##    !  $  ####  ###H
 H#####  ###   #     ####   $    ###H
 H#! ## $  #           ##  ! ###$###H
@@ -82,7 +85,7 @@ H #####! #  ####.$!!!! .H
 H !#!   $   # ! #!!!  !$H
 H  #  ## ## $$# #### !# H
 H ### ##  # #    !  ### H
-H    $  $  $#$ #### #^# H
+H    $  $  $#$ #### ### H
 H !   #  ## #    ... ## H
 H ## ### # @    #... ## H
 H    $  $  ###  #... ## H
@@ -103,7 +106,7 @@ H    #      # ##    #    # #   #   #H
 H   #  ### ##  ## #   # #    #  #   H
 H##        ###       #    #   #    #H
 H     #  #  #  # # #    ##  #    # #H
-H ##  ##  #     # # #   #^# ##   # #H
+H ##  ##  #     # # #   ### ##   # #H
 H ###    #  #    !    ## #     ###  H
 H      #      #     #      #   #.   H
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH
@@ -163,14 +166,14 @@ H #$ ####  # ### ##   H
 H !   $   $      $ $  H
 H ######## $##$    $  H
 H  $  ! .##      ##   H
-H########^#  !   #   @H
+H##########  !   #   @H
 HHHHHHHHHHHHHHHHHHHHHHH
 """,
 
 # map 9
 """
 HHHHHHHHHHHHHHHHHHHHHHHH
-H#^#...HHHHHHHH  ######H
+H###...HHHHHHHH  ######H
 H###.       $ H $    .HH
 HHHH$ $HHHHHH!H.......HH
 HH$H$  H.HH#H H $ $$$ HH
@@ -184,7 +187,7 @@ HH $ .HHHH!   ! ##HHH$HH
 HH H$$  .HHHHHHHHHH   HH
 HH. $    HH!    $     HH
 HHHHH $.HHH  $$$    ...H
-H#^##   .HH $    P  ...H
+H####   .HH $    P  ...H
 HHHHHHHHHHHHHHHHHHHHHHHH
 """
 ]
