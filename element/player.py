@@ -53,6 +53,12 @@ class Player(Object):
     def Set_Dead(self):
         self.__isdead = True   
 
+    def is_won(self, all_objects: dict) -> bool:
+        for goal in all_objects[ObjectID.GOAL]:
+            if not pygame.sprite.spritecollide(goal, all_objects[ObjectID.BOX], dokill=False):
+                return False
+        return True
+
     # 增加子彈
     def add_ammo(self, delta):
         self.__ammo += delta

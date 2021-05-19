@@ -1,5 +1,6 @@
 import pygame
 import time
+import enum
 
 pygame.init()  # 初始化pygame
 pygame.font.init()
@@ -14,6 +15,12 @@ import maps
 import frame
 
 
+class GameState(enum.Enum):
+    PLAYING = 0
+    PAUSE = 1
+    VICTORY = 2
+
+
 class Game():
     """
     level 表示第幾關
@@ -25,11 +32,11 @@ class Game():
         self.ticker = pygame.time.Clock()
         self.background = (230, 230, 200)  # 背景顏色
         self.level = level
-        self.map_ = maps.get_map(level)
         self.build_world()
         self.key_cooldown = time.time()
         self.game_pause = frame.pause.Pause() # pause frame
-        self.STW = False # stop the world (pause)
+        self.game_victory = frame.victory.Victory()
+        self.state = GameState.PLAYING
 
         self.display_font = pygame.font.SysFont("default", 32)
 
@@ -39,29 +46,41 @@ class Game():
             self.mask = element.Mask(player_x, player_y)
 
     def run_game(self):
-        in_game = True
-        while in_game:
+        self.in_game = True
+        while self.in_game:
             # 基礎事件
             events = pygame.event.get()
             for event in events:
                 if event.type == pygame.QUIT:
-                    in_game = False
+                    self.in_game = False
             
-            if self.STW:
+            if self.state == GameState.PLAYING:
+                self.update_world()
+                self.key_handle()
+                self.draw_world()
+            elif self.state == GameState.PAUSE:
                 # 背景色
                 self.screen.fill(self.background)
                 selection = self.game_pause.update(self.screen)
                 if selection == frame.pause.RESUME:
-                    self.STW = False
+                    self.state = GameState.PLAYING
                 elif selection == frame.pause.RESTART:
                     self.restart()
-                    self.STW = False
+                    self.state = GameState.PLAYING
                 elif selection == frame.pause.EXIT:
-                    in_game = False
-            else:
-                self.update_world()
-                self.key_handle()
-                self.draw_world()
+                    self.in_game = False
+            elif self.state == GameState.VICTORY:
+                self.screen.fill(self.background)
+                selection = self.game_victory.update(self.screen)
+                if selection == frame.victory.NEXTLEVEL:
+                    self.level += 1
+                    self.build_world()
+                    self.state = GameState.PLAYING
+                elif selection == frame.pause.RESTART:
+                    self.restart()
+                    self.state = GameState.PLAYING
+                elif selection == frame.pause.EXIT:
+                    self.in_game = False
 
             # debug用資訊
             text = " fps: {:.1f}".format(self.ticker.get_fps())
@@ -114,7 +133,7 @@ class Game():
 
         # game pause
         if keys[pygame.K_ESCAPE]:
-            self.STW = True
+            self.state = GameState.PAUSE
 
     # 建構地圖
     def build_world(self):
@@ -126,8 +145,10 @@ class Game():
         self.portals = pygame.sprite.Group()
         self.walls = pygame.sprite.Group()
 
+        self.map_ = maps.get_map(self.level)
+
         x, y = 0, 0
-        for i, v in enumerate(self.map_):
+        for _, v in enumerate(self.map_):
             if v == "\n": # 換行
                 y += 40
                 x = 0
@@ -179,6 +200,9 @@ class Game():
         if self.player.isdead() == True:
             self.gameover()
 
+        if self.player.is_won(self.all_objects):
+            self.state = GameState.VICTORY
+
 
     # 畫在螢幕上
     def draw_world(self):
@@ -204,5 +228,5 @@ class Game():
 
 if __name__ == "__main__":
     # debugging now, mask_enabled should be True
-    game = Game(level=9, mask_enabled=False)
+    game = Game(level=0, mask_enabled=False)
     game.run_game()
