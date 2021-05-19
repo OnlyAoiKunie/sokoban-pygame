@@ -54,6 +54,12 @@ class Player(Object):
         self.__isdead = True   
 
     def is_won(self, all_objects: dict) -> bool:
+        # 雙向檢查
+        # 檢查箱子
+        for box in all_objects[ObjectID.BOX]:
+            if not pygame.sprite.spritecollide(box, all_objects[ObjectID.GOAL], dokill=False):
+                return False
+        # 檢查終點
         for goal in all_objects[ObjectID.GOAL]:
             if not pygame.sprite.spritecollide(goal, all_objects[ObjectID.BOX], dokill=False):
                 return False
