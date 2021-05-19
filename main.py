@@ -19,6 +19,7 @@ class GameState(enum.Enum):
     PLAYING = 0
     PAUSE = 1
     VICTORY = 2
+    LOSS = 3
 
 
 class Game():
@@ -76,10 +77,10 @@ class Game():
                     self.level += 1
                     self.build_world()
                     self.state = GameState.PLAYING
-                elif selection == frame.pause.RESTART:
+                elif selection == frame.victory.RESTART:
                     self.restart()
                     self.state = GameState.PLAYING
-                elif selection == frame.pause.EXIT:
+                elif selection == frame.victory.EXIT:
                     self.in_game = False
 
             # debug用資訊
