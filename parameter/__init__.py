@@ -16,7 +16,7 @@ PORTAL_SIZE = 35
 PORTAL_DELAY = 4 #(frame)
 
 # 玩家
-INIT_BULLET_NUM = 3
+INIT_BULLET_NUM = 10
 
 # 物體移動速度
 BULLET_VELOCITY = 10  # pixel
